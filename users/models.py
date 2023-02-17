@@ -17,6 +17,9 @@ class Person(AbstractUser):
     username = models.CharField(unique=True,max_length=40)
     USERNAME_FIELD ='username'
     def __str__(self):
-        return f"the person username is {self.username}"  
+        return f"the person username is {self.username}"
+    class Meta:
+        verbose_name =('Person')
+        verbose_name_plural ='Persons' 
     
     

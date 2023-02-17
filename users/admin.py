@@ -3,12 +3,6 @@ from .models import Person
 from .models import *
 
 # Register your models here.
-
-
-class PersonAdmin(admin.ModelAdmin):
-    search_fields=['first_name','last_name']
-
-
 @admin.register(Person)
 class personAdmin(admin.ModelAdmin):
     def event(self,obj):
