@@ -6,13 +6,14 @@ from .models import *
 @admin.register(Person)
 class personAdmin(admin.ModelAdmin):
     def event(self,obj):
-        val=obj.participations.get()
-        print(val)
+        val=obj.participations.filter()
+        #TODO
         
-        #print(dir(obj))
+        print(val)
+        #print(dir(val))
         return val
 
-    list_display =('cin','email','username','event')
+    list_display =('cin','email','username','is_staff','is_active','event')
     list_filter =('email','username')
     search_fields=['email','username']
     list_per_page= 5
@@ -23,14 +24,8 @@ class personAdmin(admin.ModelAdmin):
         
         ('Person Info ' , {
             'classes' :('collapse',),
-            'fields' :('cin','username','email',)
-            }) ,
-        
-        
-        
-        
-        
-        
+            'fields' :('cin','username','email','is_staff')
+            }) ,    
     )
    
 
