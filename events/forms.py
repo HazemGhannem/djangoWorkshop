@@ -21,3 +21,4 @@ class EventForm(forms.Form):
     })
     )
     organizer=forms.ModelChoiceField(label='person',queryset=Person.objects.all())
+       

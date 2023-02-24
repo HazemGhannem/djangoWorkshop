@@ -5,6 +5,8 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .forms import *
 from django.shortcuts import redirect
+from django.views.generic.edit import UpdateView
+
 # Create your views here.
 
 def test(request):
@@ -51,19 +53,26 @@ class DetailEventView(DetailView):
     context_object_name="list"
     #slug_field = 'title'
 
+class UpdateView(UpdateView):
+    model= Events
+    #form_class=EventForm
+    fields = ['title','descripton','image','category','nbe_participan']
+    template_name='events/event.html'
+    
+    def get_success_url(self, **kwargs):
+        return self.object.get_absolute_url()
+
+
 def add_event(req):
     form =EventForm() 
-    print("test")
     if req.method =='POST':
         form= EventForm(req.POST,req.FILES)  
-        print("test")
         if form.is_valid():
             print(form)
             #print(**form.cleaned_data)
             Events.objects.create(**form.cleaned_data)
-            print("test")
             return redirect( 'listeventview' )
         else:
             print(form.errors)
-            print("test")
     return render(req,"events/event.html",{'form': form})
+

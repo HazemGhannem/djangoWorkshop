@@ -3,6 +3,7 @@ from users.models import Person
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from datetime import date
+from django.urls import reverse
 
 # Create your models here.
 def title_valid(val):
@@ -39,6 +40,9 @@ class Events(models.Model ):
     )
     def __str__(self):
         return f" {self.title} {self.category}"
+    def get_absolute_url(self):
+        return reverse('DetailEventView',args=[str(self.id)],)
+
     class Meta:
         constraints =[
             models.CheckConstraint(
