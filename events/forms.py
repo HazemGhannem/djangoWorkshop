@@ -1,12 +1,13 @@
 from django import forms
 from users.models import Person
+from .models import Events
 
 CHOIX= (
         ('Musique','Musique'),
         ('Cinema','Cinema'),
         ('Sport','Sport'),
 )
-class EventForm(forms.Form):
+class EventForm(forms.ModelForm):
     title= forms.CharField(label='title')
     descripton=forms.CharField(label='desc',widget=forms.Textarea(attrs={
         'class':'form-control'
@@ -21,4 +22,8 @@ class EventForm(forms.Form):
     })
     )
     organizer=forms.ModelChoiceField(label='person',queryset=Person.objects.all())
+
+    class Meta:
+        model = Events
+        fields = ['title','descripton','image','category','nbe_participan','organizer','evt_date']
        

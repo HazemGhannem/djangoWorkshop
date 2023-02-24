@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from .models import Events
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .forms import *
+from .forms import EventForm
 from django.shortcuts import redirect
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+
 
 # Create your views here.
 
@@ -55,13 +58,15 @@ class DetailEventView(DetailView):
 
 class UpdateView(UpdateView):
     model= Events
-    #form_class=EventForm
-    fields = ['title','descripton','image','category','nbe_participan']
+    form_class=EventForm
     template_name='events/event.html'
     
-    def get_success_url(self, **kwargs):
-        return self.object.get_absolute_url()
+class DeleteView(DeleteView):
+    model= Events
+    template_name = "events/deleteevent.html"
+    success_url=reverse_lazy('listeventview')
 
+  
 
 def add_event(req):
     form =EventForm() 
