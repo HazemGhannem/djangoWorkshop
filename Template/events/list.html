@@ -1,6 +1,15 @@
-<ul>
-    {% for e in list %}
-    <li> {{ e.description }}</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block content %}
+    <ul>
+        {% for e in list %}
+        <h1>Event</h1>
+        <li> <a href="{% url 'DetailEventView' e.id %}">{{ e.title }}</a></li>
+        {% comment %} <li> <a href="{% url 'DetailEventView' e.title %}">{{ e.title }}</a></li> {% endcomment %}
+         <img src="{{e.image.url}}" class="w-25" alt="">
+        
+        
+        {% comment %} <li> {{ e }}</li> {% endcomment %}
+        {% endfor %}
+    </ul>
+{% endblock %}
 

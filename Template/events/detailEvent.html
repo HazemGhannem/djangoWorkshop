@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    
+    <li> {{ list.title }}</li>
+    <li> {{ list.category }}</li>
+    <li> {{ list.descripton }}</li>
+    <li> {{ list.nbe_participan }}</li>
+    <li> {{ list.state }}</li>
+    <li> {{ list.created_at|date }}</li>
+    <li> <img src="{{list.image.url}}" class="w-25" alt=""></li> 
+    
+    
+    {% comment %} <li> {{ e }}</li> {% endcomment %}
+
+
+
+
+{% endblock %}
