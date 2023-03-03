@@ -13,5 +13,6 @@ urlpatterns = [
     path('addevent/',add_event,name='add_event'),
     path('updateevent/<int:pk>/',UpdateView.as_view(),name='update_event'),
     path('delete/<int:pk>/',DeleteView.as_view(),name='delete_event'),
+    path('parti/<int:pk>',parti,name='parti'),
     
 ]

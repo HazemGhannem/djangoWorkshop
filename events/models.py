@@ -39,7 +39,7 @@ class Events(models.Model ):
 
     )
     def __str__(self):
-        return f" {self.title} {self.category}"
+        return f" {self.title} {self.category} {self.pk}"
     def get_absolute_url(self):
         return reverse('DetailEventView',args=[str(self.id)],)
 
@@ -61,5 +61,6 @@ class Participation(models.Model):
     Person = models.ForeignKey(Person,on_delete=models.CASCADE)
     event = models.ForeignKey(Events,on_delete=models.CASCADE)
     date_participation = models.DateTimeField(auto_now_add=True)
-
+    def __str__(self):
+        return f" {self.Person} {self.event} {self.date_participation}"
 

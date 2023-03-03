@@ -8,6 +8,9 @@ from django.shortcuts import redirect
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -42,7 +45,8 @@ def ListEven(request):
     #list=Events.objects.all()
     list=Events.objects.filter(state=True)# filter with state
     return render(request,'events/list.html',{'list':list})
-class ListEvent(ListView):
+class ListEvent(LoginRequiredMixin,ListView):
+    login_url='login'
     model = Events
     template_name='events/list.html'
     context_object_name="list"
@@ -50,24 +54,27 @@ class ListEvent(ListView):
     def get_queryset(self) :
         return Events.objects.filter(state=False)
 
-class DetailEventView(DetailView):
+class DetailEventView(LoginRequiredMixin,DetailView):
+    login_url='login'
     model= Events
     template_name='events/detailEvent.html'
     context_object_name="list"
     #slug_field = 'title'
 
-class UpdateView(UpdateView):
+class UpdateView(LoginRequiredMixin,UpdateView):
+    login_url='login'
     model= Events
     form_class=EventForm
     template_name='events/event.html'
     
-class DeleteView(DeleteView):
+class DeleteView(LoginRequiredMixin,DeleteView):
+    login_url='login'
     model= Events
     template_name = "events/deleteevent.html"
     success_url=reverse_lazy('listeventview')
 
   
-
+@login_required(login_url='login')
 def add_event(req):
     form =EventForm() 
     if req.method =='POST':
@@ -81,3 +88,15 @@ def add_event(req):
             print(form.errors)
     return render(req,"events/event.html",{'form': form})
 
+
+
+def parti(req,pk):
+    current_user = req.user
+    curren_event=Events.objects.filter(pk=pk)
+    event=Events.objects.filter(Participation=current_user)
+    for i in curren_event:
+        print(i.nbe_participan- i.Participation.count()>0)
+        if (i.nbe_participan- i.Participation.count()>0):
+            i.Participation.add(current_user)
+            i.save()
+    return render(req,"events/parti.html",{'list': event})
